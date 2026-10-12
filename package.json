@@ -1,6 +1,6 @@
 {
   "name": "simple-block-explorer",
-  "version": "1.0.0-rc.5",
+  "version": "1.0.0-rc.6",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -22,10 +22,10 @@
     "eth_getBlockByNumber": "node src/CLI/metodos.js eth_getBlockByNumber",
     "eth_getBlockByHash": "node src/CLI/metodos.js eth_getBlockByHash",
     "eth_getBlockReceipts": "node src/CLI/metodos.js eth_getBlockReceipts '[\"latest\"]'",
+    "eth_getBlockTransactionCountByHash": "node src/CLI/metodos.js eth_getBlockTransactionCountByHash",
+    "eth_getBlockTransactionCountByNumber": "node src/CLI/metodos.js eth_getBlockTransactionCountByNumber",
     "eth_estimateGas": "node src/CLI/eth_estimateGas.js",
     "eth_call": "node src/CLI/eth_call.js",
-    "eth_getBlockTransactionCountByHash": "node src/CLI/eth_getBlockTransactionCountByHash.js",
-    "eth_getBlockTransactionCountByNumber": "node src/CLI/eth_getBlockTransactionCountByNumber.js",
     "eth_getCode": "node src/CLI/eth_getCode.js",
     "eth_getTransactionByBlockHashAndIndex": "node src/CLI/eth_getTransactionByBlockHashAndIndex.js",
     "eth_getTransactionByBlockNumberAndIndex": "node src/CLI/eth_getTransactionByBlockNumberAndIndex.js",
