@@ -1,23 +1,7 @@
-require("dotenv").config({ path: ".env" });
-const url = process.env.RPC_NODE;
+const { chamada } = require("./chamada");
 
 async function main() {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      method: "eth_blockNumber",
-      params: [],
-      id: 1,
-      jsonrpc: "2.0",
-    }),
-  });
-
-  const data = await response.json();
-
-  console.log(data);
+  console.log(await chamada("eth_blockNumber"));
 }
 
 main().catch((error) => {

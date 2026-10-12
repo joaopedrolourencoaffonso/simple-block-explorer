@@ -1,14 +1,14 @@
 {
   "name": "simple-block-explorer",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "eth_blockNumber": "node src/CLI/eth_blockNumber.js",
-    "eth_baseFee": "node src/CLI/eth_baseFee.js",
-    "eth_syncing": "node src/CLI/eth_syncing.js",
     "eth_chainId": "node src/CLI/eth_chainId.js",
     "eth_gasPrice": "node src/CLI/eth_gasPrice.js",
+    "eth_baseFee": "node src/CLI/eth_baseFee.js",
+    "eth_syncing": "node src/CLI/eth_syncing.js",
     "eth_getBalance": "node src/CLI/eth_getBalance",
     "net_peerCount": "node src/CLI/net_peerCount.js",
     "net_version": "node src/CLI/net_version.js",
@@ -29,7 +29,11 @@
     "eth_getTransactionByHash": "node src/CLI/eth_getTransactionByHash.js",
     "eth_getTransactionCount": "node src/CLI/eth_getTransactionCount.js",
     "eth_getTransactionReceipt": "node src/CLI/eth_getTransactionReceipt.js",
-    "eth_getLogs": "node src/CLI/eth_getLogs.js"
+    "eth_getLogs": "node src/CLI/eth_getLogs.js",
+    "txpool_content": "node src/CLI/txpool_content.js",
+    "txpool_status": "node src/CLI/txpool_status.js",
+    "eth_base_fee": "node src/CLI/eth_base_fee.js",
+    "msg": "node src/CLI/msg.js"
   },
   "author": "João Pedro Lourenço Affonso",
   "license": "MIT",
