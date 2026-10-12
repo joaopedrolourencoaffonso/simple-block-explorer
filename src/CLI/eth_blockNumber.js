@@ -1,4 +1,5 @@
-const url = "http://127.0.0.1:8545";
+require("dotenv").config({ path: ".env" });
+const url = process.env.RPC_NODE;
 
 async function main() {
   const response = await fetch(url, {
