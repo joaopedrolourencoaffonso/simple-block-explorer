@@ -17,6 +17,7 @@ Um explorar de blocos simples para redes ethereum.
 - [X] web3_clientVersion
 - [X] txpool_content
 - [X] txpool_status
+- [X] eth_max_priority_fee_per_gas
 
 ## Com input
 
@@ -53,6 +54,5 @@ Um explorar de blocos simples para redes ethereum.
 - [ ] eth_uninstallFilter
 - [ ] eth_unsubscribe
 - [ ] eth_get_asset_balance
-- [ ] eth_max_priority_fee_per_gas
 
 
