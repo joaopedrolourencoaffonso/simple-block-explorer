@@ -1,18 +1,13 @@
 require("dotenv").config({ path: ".env" });
 const url = process.env.RPC_NODE;
 
-async function chamada(method) {
+async function chamada(json_para_envio) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      method: method,
-      params: [],
-      id: 1,
-      jsonrpc: "2.0",
-    }),
+    body: JSON.stringify(json_para_envio),
   });
 
   const data = await response.json();

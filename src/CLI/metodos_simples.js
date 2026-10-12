@@ -7,7 +7,14 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(await chamada(method));
+  json_para_envio = {
+      method: method,
+      params: [],
+      id: 1,
+      jsonrpc: "2.0",
+  };
+
+  console.log(await chamada(json_para_envio));
 }
 
 main().catch((error) => {
