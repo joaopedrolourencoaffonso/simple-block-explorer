@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Teste de chamadas</title>
+    </head>
+    <body>
+        <h2>Testar chamadas</h2>
+
+        <textarea id="textInput" rows="6" cols="80">
+{
+    "method": "eth_blockNumber",
+    "params": [],
+    "id": 1,
+    "jsonrpc": "2.0"
+}</textarea>
+        <br><br>
+        <button onclick="enviar()">Enviar</button>
+        <hr>
+        <p id="substituirTextoAqui"></p>
+      
+        <script>
+            const RPC_NODE = "/api";
+            async function enviar() {
+                const json_para_envio = document.getElementById("textInput").value;
+                console.log("Sending request to RPC node:", RPC_NODE);
+  
+                const response = await fetch(RPC_NODE, {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: json_para_envio,
+                });
+                const data = await response.json();
+                console.log("Received response:", data);
+                let resposta = JSON.stringify(data, null, 2);
+                responsta = resposta.replace("{","{<br>&nbsp;").replace("}","<br>}").replaceAll(",", ",<br>&nbsp;");
+  
+                element = document.getElementById("substituirTextoAqui");
+                element.innerHTML = responsta;
+            }
+        </script>
+    </body>
+  </html>
