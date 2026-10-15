@@ -36,12 +36,12 @@
             <option value="eth_getTransactionByHash">eth_getTransactionByHash</option>
             <option value="eth_getTransactionCount">eth_getTransactionCount</option>
             <option value="eth_getTransactionReceipt">eth_getTransactionReceipt</option>
-            <option value="eth_getLogs">eth_getLogs"</option>
+            <option value="eth_getLogs">eth_getLogs</option>
         </select>
 
         <br><br>
 
-        <textarea id="textInput" rows="6" cols="80">
+        <textarea id="textInput" rows="10" cols="80">
 {
     "method": "eth_blockNumber",
     "params": [],
@@ -78,21 +78,140 @@
             }
 
             metodoEscolhido.addEventListener('change', (event) => {
-                const selectedValue = event.target.value;
-                console.log("--> ", selectedValue);
+                const selectedValueTemp = event.target.value;
+                const metodoSelecionado = String(selectedValueTemp)
+                console.log("--> ", metodoSelecionado);
+
+                //let metodoSelecionado = "";
+                let listaDeParametros = '[]'
 
                 metodos_sem_input = ["eth_blockNumber", "eth_chainId", "eth_baseFee", "eth_gasPrice", "eth_syncing", "net_peerCount", "net_version", "net_listening", "web3_clientVersion", "txpool_content", "txpool_status", "eth_base_fee", "eth_maxPriorityFeePerGas"];
 
-                if (metodos_sem_input.includes(String(selectedValue))) {
-                    campoDeTexto = document.getElementById("textInput");
-                    campoDeTexto.value = `{
-    "method": "${selectedValue}",
-    "params": [],
+                if (metodos_sem_input.includes(metodoSelecionado)) {
+                    listaDeParametros = '[]'
+                }
+
+                if (metodoSelecionado == "web3_sha3") {
+                    listaDeParametros = `[
+    "0x736e6f7773746f726d"
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_getBalance") {
+                    listaDeParametros = `[
+    "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+    "latest"
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_getBlockByNumber") {
+                    listaDeParametros = `[
+    "0xc5043f",
+    false
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_getBlockByHash") {
+                    listaDeParametros = `[
+    "0xdcfce25a3318f7e6ac4d5ae7f9f3644e39b2ad411ef218d04ca65fec4a1bf737",
+    false
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_getBlockReceipts") {
+                    listaDeParametros = `["latest"]`
+                }
+
+                if (metodoSelecionado == "eth_getBlockTransactionCountByHash") {
+                    listaDeParametros = `[
+    "0x3e56c97d34f03b1369c351fa6c9f57c8bfa987c7da40964fab981303e0ef5849"
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_getBlockTransactionCountByNumber") {
+                    listaDeParametros = `[
+    "0xc5043f"
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_estimateGas") {
+                    listaDeParametros = `[
+    {
+      "from": "0x8D97689C9818892B700e27F316cc3E41e17fBeb9",
+      "to": "0xd3CdA913deB6f67967B99D67aCDFa1712C293601",
+      "value": "0x0"
+    }
+  ]`
+                }
+
+                if (metodoSelecionado == "eth_call") {
+                    listaDeParametros = `[
+    {
+      "from": null,
+      "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "data": "0x70a082310000000000000000000000006E0d01A76C3Cf4288372a29124A26D4353EE51BE"
+    },
+    "latest"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getCode") {
+                    listaDeParametros = `[
+    "0x5B56438000bAc5ed2c6E0c1EcFF4354aBfFaf889",
+    "latest"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getTransactionByBlockHashAndIndex") {
+                    listaDeParametros = `[
+    "0x3e56c97d34f03b1369c351fa6c9f57c8bfa987c7da40964fab981303e0ef5849",
+    "0x2"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getTransactionByBlockNumberAndIndex") {
+                    listaDeParametros = `[
+    "0xc5043f",
+    "0x2"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getTransactionByHash") {
+                    listaDeParametros = `[
+    "0x9c7c5b4b6ea006843298ebbdc4494ebee427ab8d794f62c2c06373e70e296d84"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getTransactionCount") {
+                    listaDeParametros = `[
+    "0x9c7c5b4b6ea006843298ebbdc4494ebee427ab8d794f62c2c06373e70e296d84"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getTransactionReceipt") {
+                    listaDeParametros = `[
+    "0x9c7c5b4b6ea006843298ebbdc4494ebee427ab8d794f62c2c06373e70e296d84"
+  ]`;
+                }
+
+                if (metodoSelecionado == "eth_getLogs") {
+                    listaDeParametros = `[
+    {
+      "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+    }
+  ]`;
+                }
+
+                const chamadaTemplate = `{
+    "method": "${metodoSelecionado}",
+    "params": ${listaDeParametros},
     "id": 1,
     "jsonrpc": "2.0"
 }
                     `;
-                }
+
+                campoDeTexto = document.getElementById("textInput");
+                campoDeTexto.value = chamadaTemplate;
             });
         </script>
     </body>
