@@ -2,44 +2,103 @@
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Teste de chamadas</title>
+        <title>Block Explorer</title>
     </head>
-    <body>
-        <h2>Testar chamadas</h2>
+    <body onload="iniciaPagina()">
+        <div id="topBar" class="topBar">
+            <nav>
+                <a href="/blocks">Blocks</a>
+                <a href="/txs">Transactions</a>
+                <a href="/logs">Logs</a>
+                <a href="/LICENSE">License</a>
+            </nav>
+        </div>
+        <div id="statistics" class="statistics">
+            <p id="chainID"></p>
+            <p id="blockNumber"></p>
+            <p id="gasPrice"></p>
+            <p id="syncing"></p>
+            <p id="baseFee"></p>
+            <p id="web3_clientVersion"></p>
+            <p id="net_version"></p>
+            <p id="net_peerCount"></p>
+        </div>
+        <div id="infoRapida" class="infoRapida">
+            <div id="blocosRecentes" class="blocosRecentes"></div>
+            <div id="transacoesRecentes" class="transacoesRecentes"></div>
+        </div>
 
-        <textarea id="textInput" rows="6" cols="80">
-{
-    "method": "eth_blockNumber",
-    "params": [],
-    "id": 1,
-    "jsonrpc": "2.0"
-}</textarea>
-        <br><br>
-        <button onclick="enviar()">Enviar</button>
-        <hr>
-        <p id="substituirTextoAqui"></p>
-      
         <script>
-            const RPC_NODE = "/api";
-            async function enviar() {
-                const json_para_envio = document.getElementById("textInput").value;
-                console.log("Sending request to RPC node:", RPC_NODE);
+
+            async function iniciaPagina() {
+                let elemento;
+                let response;
+
+                // chainID
+                response = await enviar("eth_chainId", '[]');
+                elemento = document.getElementById("chainID");
+                const chainId = parseInt(response.result, 16);
+                elemento.innerHTML = `Chain id: ${chainId}`;
+                
+                // blockNumber
+                response = await enviar("eth_blockNumber", '[]');
+                elemento = document.getElementById("blockNumber");
+                const blockNumber = parseInt(response.result, 16);
+                elemento.innerHTML = `Número de Blocos: ${blockNumber}`;
+
+                // gasPrice
+                response = await enviar("eth_gasPrice", '[]');
+                elemento = document.getElementById("gasPrice");
+                const gasPrice = parseInt(response.result, 16);
+                elemento.innerHTML = `gasPrice: ${gasPrice}`;
+
+                // syncing
+                response = await enviar("eth_syncing", '[]');
+                elemento = document.getElementById("syncing");
+                const syncing = response.result;
+                elemento.innerHTML = `syncing: ${syncing}`;
+
+                // baseFee
+                response = await enviar("eth_baseFee", '[]');
+                elemento = document.getElementById("baseFee");
+                const baseFee = parseInt(response.result, 16);
+                elemento.innerHTML = `baseFee: ${baseFee}`;
+
+                // web3_clientVersion
+                response = await enviar("web3_clientVersion", '[]');
+                elemento = document.getElementById("web3_clientVersion");
+                const web3_clientVersion = response.result;
+                elemento.innerHTML = `client Version: ${web3_clientVersion}`;
+
+                // net_version
+                response = await enviar("net_version", '[]');
+                elemento = document.getElementById("net_version");
+                const net_version = response.result;
+                elemento.innerHTML = `client Version: ${net_version}`;
+
+                // web3_clientVersion
+                response = await enviar("net_peerCount", '[]');
+                elemento = document.getElementById("net_peerCount");
+                const net_peerCount = parseInt(response.result, 16);;
+                elemento.innerHTML = `Número de Peers: ${net_peerCount}`;
+
+            }
+
+            async function enviar(metodo, params) {
+                console.log("Sending request to RPC node:", metodo, params);
   
-                const response = await fetch(RPC_NODE, {
+                const response = await fetch("/api", {
                     method: "POST",
                     headers: {
                     "Content-Type": "application/json",
                     },
-                    body: json_para_envio,
+                    body: `{"method": "${metodo}","params": ${params},"id": 1,"jsonrpc": "2.0"}`,
                 });
                 const data = await response.json();
-                console.log("Received response:", data);
-                let resposta = JSON.stringify(data, null, 2);
-                responsta = resposta.replace("{","{<br>&nbsp;").replace("}","<br>}").replaceAll(",", ",<br>&nbsp;");
-  
-                element = document.getElementById("substituirTextoAqui");
-                element.innerHTML = responsta;
+                
+                return data;
             }
+
         </script>
     </body>
   </html>
