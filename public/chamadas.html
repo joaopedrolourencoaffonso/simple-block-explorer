@@ -7,6 +7,40 @@
     <body>
         <h2>Testar chamadas</h2>
 
+        <select name="metodos" id="metodoSelecionado">
+            <option value="eth_blockNumber">eth_blockNumber</option>
+            <option value="eth_chainId">eth_chainId</option>
+            <option value="eth_baseFee">eth_baseFee</option>
+            <option value="eth_gasPrice">eth_gasPrice</option>
+            <option value="eth_syncing">eth_syncing</option>
+            <option value="net_peerCount">net_peerCount</option>
+            <option value="net_version">net_version</option>
+            <option value="net_listening">net_listening</option>
+            <option value="web3_clientVersion">web3_clientVersion</option>
+            <option value="txpool_content">txpool_content</option>
+            <option value="txpool_status">txpool_status</option>
+            <option value="eth_base_fee">eth_base_fee</option>
+            <option value="eth_maxPriorityFeePerGas">eth_maxPriorityFeePerGas</option>
+            <option value="web3_sha3">web3_sha3</option>
+            <option value="eth_getBalance">eth_getBalance</option>
+            <option value="eth_getBlockByNumber">eth_getBlockByNumber</option>
+            <option value="eth_getBlockByHash">eth_getBlockByHash</option>
+            <option value="eth_getBlockReceipts">eth_getBlockReceipts</option>
+            <option value="eth_getBlockTransactionCountByHash">eth_getBlockTransactionCountByHash</option>
+            <option value="eth_getBlockTransactionCountByNumber">eth_getBlockTransactionCountByNumber</option>
+            <option value="eth_estimateGas">eth_estimateGas</option>
+            <option value="eth_call">eth_call</option>
+            <option value="eth_getCode">eth_getCode</option>
+            <option value="eth_getTransactionByBlockHashAndIndex">eth_getTransactionByBlockHashAndIndex</option>
+            <option value="eth_getTransactionByBlockNumberAndIndex">eth_getTransactionByBlockNumberAndIndex</option>
+            <option value="eth_getTransactionByHash">eth_getTransactionByHash</option>
+            <option value="eth_getTransactionCount">eth_getTransactionCount</option>
+            <option value="eth_getTransactionReceipt">eth_getTransactionReceipt</option>
+            <option value="eth_getLogs">eth_getLogs"</option>
+        </select>
+
+        <br><br>
+
         <textarea id="textInput" rows="6" cols="80">
 {
     "method": "eth_blockNumber",
@@ -21,6 +55,8 @@
       
         <script>
             const RPC_NODE = "/api";
+            metodoEscolhido = document.getElementById("metodoSelecionado")
+
             async function enviar() {
                 const json_para_envio = document.getElementById("textInput").value;
                 console.log("Sending request to RPC node:", RPC_NODE);
@@ -40,6 +76,24 @@
                 element = document.getElementById("substituirTextoAqui");
                 element.innerHTML = responsta;
             }
+
+            metodoEscolhido.addEventListener('change', (event) => {
+                const selectedValue = event.target.value;
+                console.log("--> ", selectedValue);
+
+                metodos_sem_input = ["eth_blockNumber", "eth_chainId", "eth_baseFee", "eth_gasPrice", "eth_syncing", "net_peerCount", "net_version", "net_listening", "web3_clientVersion", "txpool_content", "txpool_status", "eth_base_fee", "eth_maxPriorityFeePerGas"];
+
+                if (metodos_sem_input.includes(String(selectedValue))) {
+                    campoDeTexto = document.getElementById("textInput");
+                    campoDeTexto.value = `{
+    "method": "${selectedValue}",
+    "params": [],
+    "id": 1,
+    "jsonrpc": "2.0"
+}
+                    `;
+                }
+            });
         </script>
     </body>
   </html>
