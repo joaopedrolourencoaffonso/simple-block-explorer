@@ -1,6 +1,6 @@
 {
   "name": "simple-block-explorer",
-  "version": "1.0.0-rc.11",
+  "version": "1.0.0-rc.12",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -39,6 +39,7 @@
   "description": "A simple blockchain explorer for Ethereum-like blockchains, built with Node.js and Express.",
   "dependencies": {
     "dotenv": "^17.4.2",
+    "ejs": "^7.0.1",
     "express": "^5.2.1"
   }
 }
