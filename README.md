@@ -83,3 +83,7 @@ To exit, press ctrl-d or type exit
 > eth.sendTransaction({from: "0x71562b71999873DB5b286dF957af199Ec94617F7",to:"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",value: web3.toWei(10, "ether")});
 "0x07fac3f3d3bf74ed24e8be1b43b3dc15a97688241d0637a3c3c891fe5ad33302"
 ```
+
+## Melhorias futuras
+
+- Página principal demora para expôr informações de blocos
