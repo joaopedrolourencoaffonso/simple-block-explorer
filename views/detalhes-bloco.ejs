@@ -1,1 +1,28 @@
-<h1>Bloco #<%= blockNumber %></h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Bloco <%= blockNumber %></title>
+</head>
+<body onload="iniciaPagina()">
+    <div id="topBar" class="topBar">
+        <nav>
+            <a href="/blocks">Blocks</a>
+            <a href="/txs">Transactions</a>
+            <a href="/logs">Logs</a>
+            <a href="/chamadas">Chamadas</a>
+            <a href="/LICENSE">License</a>
+        </nav>
+    </div>
+
+    <div id="searchBar" class="searchBar">
+        <br>
+        <input type="text" placeholder="Procurar.." id="barraDePesquisa">
+        <button onclick="paginaBloco()">Ver</button>
+        <br>
+    </div>
+    
+    <div id="blocosRecentes" class="blocosRecentes">
+        <h1>Bloco <%= blockNumber %></h1>
+        
+    </div>
+
+</body>

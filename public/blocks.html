@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Blocos</title>
+    </head>
+    <body onload="iniciaPagina()">
+        <div id="topBar" class="topBar">
+            <nav>
+                <a href="/blocks">Blocks</a>
+                <a href="/txs">Transactions</a>
+                <a href="/logs">Logs</a>
+                <a href="/chamadas">Chamadas</a>
+                <a href="/LICENSE">License</a>
+            </nav>
+        </div>
+
+        <div id="searchBar" class="searchBar">
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisa">
+            <button onclick="paginaBloco()">Ver</button>
+            <br>
+        </div>
+        
+        <div id="blocosRecentes" class="blocosRecentes">
+            
+        </div>
+
+        <script>
+            let numeroDeBlocos;
+
+            async function iniciaPagina() {
+                let elemento;
+                let response;
+
+                // blockNumber
+                response = await enviar("eth_blockNumber", '[]');
+                elemento = document.getElementById("blockNumber");
+                numeroDeBlocosInicial = parseInt(response.result, 16);
+
+                const final = numeroDeBlocosInicial - 20;
+                let blockNumber = numeroDeBlocosInicial;
+
+                console.log("Começando!")
+
+                while (final < blockNumber) {
+                    console.log(blockNumber);
+                    let hex = blockNumber.toString(16);
+
+                    const resultado = await enviar("eth_getBlockByNumber", `["0x${hex}",false]`);
+                    if (resultado.error) {
+                        throw new Error(resultado.error.message);
+                    }
+
+                    const bloco = resultado.result;
+                    if (!bloco) {
+                        throw new Error(`No block returned for ${blockNumber}`);
+                    }
+
+                    const blocosRecentes = document.getElementById("blocosRecentes");
+                    const blocoDiv = document.createElement("div");
+
+                    const hashP = document.createElement("p");
+                    hashP.textContent = `Hash: ${bloco.hash}`;
+
+                    const numeroHoraP = document.createElement("p");
+                    const hora = new Date(Number(bloco.timestamp) * 1000).toLocaleTimeString();
+                    numeroHoraP.textContent = `Number: ${blockNumber} | Hour: ${hora}`;
+
+                    const minerP = document.createElement("p");
+                    minerP.textContent = `Miner: ${bloco.miner}`;
+                    minerP.innerHTML = minerP.innerHTML + "<hr>"
+
+                    blocoDiv.appendChild(hashP);
+                    blocoDiv.appendChild(numeroHoraP);
+                    blocoDiv.appendChild(minerP);
+                    //blocoDiv.appendChild("<hr>");
+
+                    blocosRecentes.appendChild(blocoDiv);
+
+                    // para a próxima iteração
+                    blockNumber--;
+                }
+            }
+            
+            
+            async function enviar(metodo, params) {
+                console.log("Sending request to RPC node:", metodo, params);
+  
+                const response = await fetch("/api", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: `{"method": "${metodo}","params": ${params},"id": 1,"jsonrpc": "2.0"}`,
+                });
+                const data = await response.json();
+                
+                return data;
+            }
+
+            function paginaBloco() {
+                let bloco = document.getElementById("barraDePesquisa").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/block/${bloco}`)
+            }
+
+        </script>
+    </body>
+  </html>
