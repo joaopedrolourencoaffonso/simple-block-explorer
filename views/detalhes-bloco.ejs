@@ -120,19 +120,32 @@
     <hr>
 
     <div id="transacoes" class="transacoes">
+        <h2 id="titulo-transacoes"></h2>
+
+        <div id="campo-transacoes">
+
+        </div>
 
     </div>
 
     <hr>
 
-    <div id="tios" class="tios">
+    <div id="uncles" class="uncles">
+        <h2 id="titulo-uncles"></h2>
 
+        <div id="campo-uncles">
+
+        </div>
     </div>
 
     <hr>
 
     <div id="saques" class="saques">
+        <h2 id="titulo-saques"></h2>
 
+        <div id="campo-saques">
+
+        </div>
     </div>
 
     <script>
@@ -158,6 +171,42 @@
             for (id in atributos) {
                 console.log(atributos[id]);
                 await populaElemento(atributos[id], response);
+            }
+
+            const tituloTx = document.getElementById(`titulo-transacoes`);
+            tituloTx.innerHTML = `Tx: ${response.result["transactions"].length}`;
+
+            for (id in response.result["transactions"]) {
+                console.log(id);
+                const campoTx = document.getElementById("campo-transacoes");
+                const tx = document.createElement("p");
+                tx.innerHTML = `<p><a href="/tx/${response.result["transactions"][id]}">${response.result["transactions"][id]}</a></p>`
+
+                campoTx.appendChild(tx);
+            }
+
+            const tituloUncles = document.getElementById(`titulo-uncles`);
+            tituloUncles.innerHTML = `Uncles: ${response.result["uncles"].length}`;
+
+            for (id in response.result["uncles"]) {
+                console.log(id);
+                const campoUncles = document.getElementById("campo-uncles");
+                const Uncle = document.createElement("p");
+                Uncle.innerHTML = `<p><a href="/tx/${response.result["uncles"][id]}">${response.result["uncles"][id]}</a></p>`
+
+                campoTx.appendChild(tx);
+            }
+
+            const tituloSaques = document.getElementById(`titulo-saques`);
+            tituloSaques.innerHTML = `Saques: ${response.result["withdrawals"].length}`;
+
+            for (id in response.result["withdrawals"]) {
+                console.log(id);
+                const campoSaques = document.getElementById("campo-saques");
+                const Saque = document.createElement("p");
+                Saque.innerHTML = `<p><a href="/tx/${response.result["withdrawals"][id]}">${response.result["withdrawals"][id]}</a></p>`
+
+                campoTx.appendChild(tx);
             }
         }
 
