@@ -22,7 +22,156 @@
     
     <div id="blocosRecentes" class="blocosRecentes">
         <h1>Bloco <%= blockNumber %></h1>
+
+        <div id="tableDiv", class="tableDiv">
+            <table>
+            <tr>
+                <th>Atributo</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td>hash</td>
+                <td id="hash"></td>
+            </tr>
+            <tr>
+                <td>baseFeePerGas</td>
+                <td id="baseFeePerGas"></td>
+            </tr>
+            <tr>
+                <td>blobGasUsed</td>
+                <td id="blobGasUsed"></td>
+            </tr>
+            <tr>
+                <td>difficulty</td>
+                <td id="difficulty"></td>
+            </tr>
+            <tr>
+                <td>excessBlobGas</td>
+                <td id="excessBlobGas"></td>
+            </tr>
+            <tr>
+                <td>extraData</td>
+                <td id="extraData"></td>
+            </tr>
+            <tr>
+                <td>gasLimit</td>
+                <td id="gasLimit"></td>
+            </tr>
+            <tr>
+                <td>gasUsed</td>
+                <td id="gasUsed"></td>
+            </tr>
+            <tr>
+                <td>logsBloom</td>
+                <td id="logsBloom"></td>
+            </tr>
+            <tr>
+                <td>miner</td>
+                <td id="miner"></td>
+            </tr>
+            <tr>
+                <td>mixHash</td>
+                <td id="mixHash"></td>
+            </tr>
+            <tr>
+                <td>nonce</td>
+                <td id="nonce"></td>
+            </tr>
+            <tr>
+                <td>number</td>
+                <td id="number"></td>
+            </tr>
+            <tr>
+                <td>parentBeaconBlockRoot</td>
+                <td id="parentBeaconBlockRoot"></td>
+            </tr>
+            <tr>
+                <td>parentHash</td>
+                <td id="parentHash"></td>
+            </tr>
+            <tr>
+                <td>receiptsRoot</td>
+                <td id="receiptsRoot"></td>
+            </tr>
+            <tr>
+                <td>requestsHash</td>
+                <td id="requestsHash"></td>
+            </tr>
+            <tr>
+                <td>sha3Uncles</td>
+                <td id="sha3Uncles"></td>
+            </tr>
+            <tr>
+                <td>size</td>
+                <td id="size"></td>
+            </tr>
+            <tr>
+                <td>stateRoot</td>
+                <td id="stateRoot"></td>
+            </tr>
+            <tr>
+                <td>timestamp</td>
+                <td id="timestamp"></td>
+            </tr>
+            </table>
+        </div>
         
     </div>
+
+    <script>
+        let blockNumberTemp = "<%= blockNumber %>";
+        let blockNumber;
+        
+        async function iniciaPagina() {
+            let elemento;
+            let response;
+            
+            if (blockNumberTemp[0] != "0" && blockNumberTemp[1] != "x") {
+                blockNumber = "0x" + parseInt(blockNumberTemp, 16);
+                response = await enviar("eth_getBlockByNumber", `["${blockNumber}",false]`);
+            } else {
+                blockNumber = blockNumberTemp;
+                response = await enviar("eth_getBlockByHash", `["${blockNumber}",false]`);
+            }
+            
+            console.log("-> ", response);
+
+            const atributos = ["hash", "baseFeePerGas", "blobGasUsed", "difficulty", "excessBlobGas", "extraData", "gasLimit", "gasUsed", "logsBloom", "miner", "mixHash", "nonce","number", "parentBeaconBlockRoot","parentHash","receiptsRoot","requestsHash","sha3Uncles","size","stateRoot","timestamp"];
+
+            for (id in atributos) {
+                console.log(atributos[id]);
+                await populaElemento(atributos[id], response);
+            }
+        }
+
+        async function populaElemento(id, response) {
+            console.log("-> ", `"${id}"`, response.result[`${id}`]);
+            const element = document.getElementById(`${id}`);
+            element.innerHTML = response.result[`${id}`];
+        }
+            
+            
+        async function enviar(metodo, params) {
+            console.log("Sending request to RPC node:", metodo, params);
+
+            const response = await fetch("/api", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: `{"method": "${metodo}","params": ${params},"id": 1,"jsonrpc": "2.0"}`,
+            });
+            const data = await response.json();
+            
+            return data;
+        }
+
+        function paginaBloco() {
+            let bloco = document.getElementById("barraDePesquisa").value;
+            console.log(bloco);
+
+            window.open(`http://127.0.0.1:3000/block/${bloco}`)
+        }
+    </script>
 
 </body>
