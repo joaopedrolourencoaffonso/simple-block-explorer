@@ -20,7 +20,7 @@
         <br>
     </div>
     
-    <div id="blocosRecentes" class="blocosRecentes">
+    <div id="dadosPrincipais" class="dadosPrincipais">
         <h1>Bloco <%= blockNumber %></h1>
 
         <div id="tableDiv", class="tableDiv">
@@ -115,7 +115,24 @@
             </tr>
             </table>
         </div>
-        
+    </div>
+
+    <hr>
+
+    <div id="transacoes" class="transacoes">
+
+    </div>
+
+    <hr>
+
+    <div id="tios" class="tios">
+
+    </div>
+
+    <hr>
+
+    <div id="saques" class="saques">
+
     </div>
 
     <script>
@@ -127,7 +144,7 @@
             let response;
             
             if (blockNumberTemp[0] != "0" && blockNumberTemp[1] != "x") {
-                blockNumber = "0x" + parseInt(blockNumberTemp, 16);
+                blockNumber = "0x" + BigInt(blockNumberTemp).toString(16);
                 response = await enviar("eth_getBlockByNumber", `["${blockNumber}",false]`);
             } else {
                 blockNumber = blockNumberTemp;
