@@ -14,6 +14,18 @@
                 <a href="/LICENSE">License</a>
             </nav>
         </div>
+
+        <div id="searchBar" class="searchBar">
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
+            <button onclick="paginaBloco()">Ver Bloco</button>
+            <br>
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
+            <button onclick="paginaTx()">Ver Tx</button>
+            <br>
+        </div>
+
         <div id="statistics" class="statistics">
             <p id="chainID"></p>
             <p id="blockNumber"></p>
@@ -169,6 +181,20 @@
                 const data = await response.json();
                 
                 return data;
+            }
+            
+            function paginaBloco() {
+                let bloco = document.getElementById("barraDePesquisaBloco").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/block/${bloco}`)
+            }
+
+            function paginaTx() {
+                let bloco = document.getElementById("barraDePesquisaTx").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/tx/${bloco}`)
             }
 
         </script>

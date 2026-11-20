@@ -15,8 +15,12 @@
 
     <div id="searchBar" class="searchBar">
         <br>
-        <input type="text" placeholder="Procurar.." id="barraDePesquisa">
-        <button onclick="paginaBloco()">Ver</button>
+        <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
+        <button onclick="paginaBloco()">Ver Bloco</button>
+        <br>
+        <br>
+        <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
+        <button onclick="paginaTx()">Ver Tx</button>
         <br>
     </div>
     
@@ -233,10 +237,17 @@
         }
 
         function paginaBloco() {
-            let bloco = document.getElementById("barraDePesquisa").value;
+            let bloco = document.getElementById("barraDePesquisaBloco").value;
             console.log(bloco);
 
             window.open(`http://127.0.0.1:3000/block/${bloco}`)
+        }
+
+        function paginaTx() {
+            let bloco = document.getElementById("barraDePesquisaTx").value;
+            console.log(bloco);
+
+            window.open(`http://127.0.0.1:3000/tx/${bloco}`)
         }
     </script>
 
