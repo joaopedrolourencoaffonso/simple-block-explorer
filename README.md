@@ -37,6 +37,16 @@ $ npm start
 
 5. Acesse o aplicativo em [localhost:3000](localhost:3000).
 
+Abaixo, fotos das páginas:
+
+![](./img/pagina-principal.png)
+
+![](./img/blocos.png)
+
+![](./img/transacoes.png)
+
+![](./img/chamadas.png)
+
 ## Usando o geth localmente
 
 Para usar o geth localmente, faça o download do executável da [página oficial](https://geth.ethereum.org/downloads) e coloque em um diretório de fácil acesso.
