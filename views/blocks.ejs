@@ -3,14 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>Blocos</title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body onload="iniciaPagina()">
+    <body class="blocks-page" onload="iniciaPagina()">
         <%- include("partials/header") %>
         <%- include("partials/searchBars") %>
         
+        <main>
+        <h1>Recent Blocks</h1>
         <div id="blocosRecentes" class="blocosRecentes">
             
         </div>
+        </main>
 
         <script src="/js/basic_functions.js"></script>
         <script>
@@ -46,13 +50,16 @@
 
                     const blocosRecentes = document.getElementById("blocosRecentes");
                     const blocoDiv = document.createElement("div");
+                    if (blockNumber === numeroDeBlocosInicial) {
+                        blocoDiv.classList.add("newest-block");
+                    }
 
                     const hashP = document.createElement("p");
                     hashP.innerHTML = `Hash: <a href="/block/${bloco.hash}">${bloco.hash}</a>`;
 
                     const numeroHoraP = document.createElement("p");
                     const hora = new Date(Number(bloco.timestamp) * 1000).toLocaleTimeString();
-                    numeroHoraP.textContent = `Number: ${blockNumber} | Hour: ${hora}`;
+                    numeroHoraP.textContent = `Number: ${blockNumber} | Hour: ${hora} | Tx: ${bloco.transactions.length}`;
 
                     const minerP = document.createElement("p");
                     minerP.textContent = `Miner: ${bloco.miner}`;

@@ -1,0 +1,452 @@
+:root {
+    --blue: #1457d9;
+    --blue-dark: #0b2f72;
+    --blue-pale: #dceaff;
+    --white: #ffffff;
+    --ink: #101828;
+    --border: 3px solid var(--ink);
+    --shadow: 7px 7px 0 var(--ink);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 22px;
+    color: var(--ink);
+    background:
+        linear-gradient(var(--blue-pale) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blue-pale) 1px, transparent 1px),
+        var(--white);
+    background-size: 32px 32px;
+    font-family: "Arial Black", Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: var(--blue);
+    font-weight: 900;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+a:hover {
+    color: var(--white);
+    background: var(--blue);
+}
+
+.topBar {
+    margin-bottom: 24px;
+    border: var(--border);
+    background: var(--blue);
+    box-shadow: var(--shadow);
+}
+
+.topBar nav {
+    display: flex;
+    align-items: stretch;
+    min-height: 58px;
+    overflow-x: auto;
+}
+
+.topBar nav a {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    border-right: 3px solid var(--ink);
+    color: var(--white);
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.topBar nav a:last-child {
+    border-right: 0;
+}
+
+.topBar nav a:hover {
+    color: var(--ink);
+    background: var(--white);
+}
+
+.searchBar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px 12px;
+    margin-bottom: 24px;
+    padding: 18px;
+    border: var(--border);
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.searchBar br {
+    display: none;
+}
+
+input,
+textarea,
+select,
+button {
+    border: var(--border);
+    border-radius: 0;
+    color: var(--ink);
+    background: var(--white);
+    font: 800 15px Arial, Helvetica, sans-serif;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 13px 14px;
+}
+
+textarea {
+    min-height: 260px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 4px solid var(--blue-pale);
+    border-color: var(--blue);
+}
+
+button {
+    min-width: 130px;
+    padding: 13px 18px;
+    color: var(--white);
+    background: var(--blue);
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+button:hover {
+    color: var(--ink);
+    background: var(--white);
+}
+
+button:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 0;
+    color: var(--blue-dark);
+    text-transform: uppercase;
+}
+
+h1 {
+    margin-bottom: 18px;
+    font-size: clamp(34px, 6vw, 68px);
+    line-height: 0.95;
+}
+
+h2 {
+    margin-bottom: 14px;
+    font-size: clamp(22px, 3vw, 34px);
+}
+
+.statistics,
+.blocosRecentes,
+.txRecentes,
+.transacoes,
+.uncles,
+.saques,
+.dadosPrincipais,
+.detalhesTx {
+    max-width: 1200px;
+    margin: 0 auto 24px;
+}
+
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.statistics p {
+    min-height: 88px;
+    margin: 0;
+    padding: 18px;
+    border: var(--border);
+    background: var(--white);
+    box-shadow: 5px 5px 0 var(--blue);
+    font-size: 14px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.statistics p:empty::before {
+    content: "Loading...";
+    color: #667085;
+}
+
+.blocosRecentes,
+.txRecentes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.blocosRecentes > div,
+.txRecentes > div,
+.detalhesTx > div,
+.dadosPrincipais,
+.transacoes,
+.uncles,
+.saques {
+    border: var(--border);
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.blocosRecentes > div {
+    min-height: 180px;
+    padding: 18px;
+}
+
+.blocosRecentes p,
+.txRecentes p,
+.detalhesTx p {
+    overflow-wrap: anywhere;
+}
+
+.txRecentes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.txRecentes > div,
+.detalhesTx > div {
+    padding: 18px;
+}
+
+.dadosPrincipais,
+.transacoes,
+.uncles,
+.saques,
+.detalhesTx {
+    padding: 20px;
+}
+
+.detalhesTx {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.detalhesTx > div {
+    box-shadow: 4px 4px 0 var(--blue);
+}
+
+.tx-detail-page main,
+.block-detail-page main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tx-detail-page .detalhesTx > div strong {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.detail-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.detail-list p {
+    margin: 0;
+    padding: 12px;
+    border: 2px solid var(--ink);
+    background: var(--blue-pale);
+    overflow-wrap: anywhere;
+}
+
+.tableDiv {
+    overflow-x: auto;
+    border: var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+}
+
+th,
+td {
+    padding: 12px;
+    border: 2px solid var(--ink);
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+
+th {
+    color: var(--white);
+    background: var(--blue);
+    text-transform: uppercase;
+}
+
+td:first-child {
+    width: 220px;
+    font-weight: 900;
+}
+
+hr {
+    max-width: 1200px;
+    height: 3px;
+    margin: 24px auto;
+    border: 0;
+    background: var(--ink);
+}
+
+select,
+textarea {
+    display: block;
+}
+
+#substituirTextoAqui {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 18px;
+    border: var(--border);
+    background: var(--ink);
+    color: var(--white);
+    box-shadow: var(--shadow);
+    font-family: "Courier New", monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+body > h2 {
+    max-width: 1200px;
+    margin: 24px auto 14px;
+}
+
+body.blocks-page main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+body.blocks-page #blocosRecentes {
+    grid-template-columns: 1fr;
+}
+
+body.blocks-page #blocosRecentes > div {
+    min-height: 0;
+}
+
+body.blocks-page #blocosRecentes > div.newest-block {
+    position: relative;
+    border-color: var(--blue);
+    box-shadow: 9px 9px 0 var(--blue);
+}
+
+body.blocks-page #blocosRecentes > div.newest-block::before {
+    content: "NEWEST";
+    position: absolute;
+    top: -15px;
+    right: 18px;
+    padding: 6px 10px;
+    border: 3px solid var(--ink);
+    color: var(--white);
+    background: var(--blue);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+body.transactions-page main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+body.transactions-page #txRecentes {
+    grid-template-columns: 1fr;
+}
+
+body.transactions-page #txRecentes > div {
+    position: relative;
+    min-height: 0;
+}
+
+body.transactions-page #txRecentes > div.newest-transaction {
+    border-color: var(--blue);
+    box-shadow: 9px 9px 0 var(--blue);
+}
+
+body.transactions-page #txRecentes > div.newest-transaction::before {
+    content: "NEWEST";
+    position: absolute;
+    top: -15px;
+    right: 18px;
+    padding: 6px 10px;
+    border: 3px solid var(--ink);
+    color: var(--white);
+    background: var(--blue);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+    body {
+        padding: 14px;
+    }
+
+    .statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .blocosRecentes {
+        grid-template-columns: 1fr;
+    }
+
+    .detalhesTx,
+    .txRecentes {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .searchBar {
+        grid-template-columns: 1fr;
+    }
+
+    .searchBar button {
+        width: 100%;
+    }
+
+    .statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .topBar nav a {
+        padding-inline: 13px;
+    }
+
+    td:first-child {
+        width: 130px;
+    }
+}

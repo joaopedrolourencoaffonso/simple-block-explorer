@@ -1,15 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Bloco <%= blockNumber %></title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body onload="iniciaPagina()">
+<body class="block-detail-page" onload="iniciaPagina()">
     <%- include("partials/header") %>
     <%- include("partials/searchBars") %>
     
+    <main>
     <div id="dadosPrincipais" class="dadosPrincipais">
-        <h1>Bloco <%= blockNumber %></h1>
+        <h3>Bloco <%= blockNumber %></h3>
 
-        <div id="tableDiv", class="tableDiv">
+        <div id="tableDiv" class="tableDiv">
             <table>
             <tr>
                 <th>Atributo</th>
@@ -103,36 +107,31 @@
         </div>
     </div>
 
-    <hr>
-
     <div id="transacoes" class="transacoes">
         <h2 id="titulo-transacoes"></h2>
 
-        <div id="campo-transacoes">
+        <div id="campo-transacoes" class="detail-list">
 
         </div>
 
     </div>
-
-    <hr>
 
     <div id="uncles" class="uncles">
         <h2 id="titulo-uncles"></h2>
 
-        <div id="campo-uncles">
+        <div id="campo-uncles" class="detail-list">
 
         </div>
     </div>
-
-    <hr>
 
     <div id="saques" class="saques">
         <h2 id="titulo-saques"></h2>
 
-        <div id="campo-saques">
+        <div id="campo-saques" class="detail-list">
 
         </div>
     </div>
+    </main>
 
     <script src="/js/basic_functions.js"></script>
     <script>
@@ -178,22 +177,21 @@
             for (id in response.result["uncles"]) {
                 console.log(id);
                 const campoUncles = document.getElementById("campo-uncles");
-                const Uncle = document.createElement("p");
-                Uncle.innerHTML = `<p><a href="/tx/${response.result["uncles"][id]}">${response.result["uncles"][id]}</a></p>`
-
-                campoTx.appendChild(tx);
+                const uncle = document.createElement("p");
+                uncle.innerHTML = `<a href="/block/${response.result["uncles"][id]}">${response.result["uncles"][id]}</a>`;
+                campoUncles.appendChild(uncle);
             }
 
             const tituloSaques = document.getElementById(`titulo-saques`);
-            tituloSaques.innerHTML = `Saques: ${response.result["withdrawals"].length}`;
+            const withdrawals = response.result["withdrawals"] || [];
+            tituloSaques.innerHTML = `Saques: ${withdrawals.length}`;
 
-            for (id in response.result["withdrawals"]) {
+            for (id in withdrawals) {
                 console.log(id);
                 const campoSaques = document.getElementById("campo-saques");
-                const Saque = document.createElement("p");
-                Saque.innerHTML = `<p><a href="/tx/${response.result["withdrawals"][id]}">${response.result["withdrawals"][id]}</a></p>`
-
-                campoTx.appendChild(tx);
+                const saque = document.createElement("p");
+                saque.textContent = JSON.stringify(withdrawals[id]);
+                campoSaques.appendChild(saque);
             }
         }
 
@@ -205,3 +203,4 @@
     </script>
 
 </body>
+</html>

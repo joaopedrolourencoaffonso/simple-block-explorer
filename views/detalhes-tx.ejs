@@ -3,16 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <title>Tx: #<%= txHash %></title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body onload="iniciaPagina()">
+    <body class="tx-detail-page" onload="iniciaPagina()">
         <%- include("partials/header") %>
         <%- include("partials/searchBars") %>
 
-        <h2>Tx: #<%= txHash %></h2>
+        <main>
+            <h1>Transaction Details</h1>
+            <h2>Tx: #<%= txHash %></h2>
 
-        <div id="detalhesTx", class="detalhesTx">
-            
-        </div>
+            <div id="detalhesTx" class="detalhesTx">
+                
+            </div>
+        </main>
 
         <script src="/js/basic_functions.js"></script>
         <script>
@@ -25,7 +29,7 @@
 
                     const linhaDetalhe = document.createElement("div");
 
-                    linhaDetalhe.innerHTML = `<p>${key}: ${value}</p>`;
+                    linhaDetalhe.innerHTML = `<p><strong>${key}</strong><br>${value}</p>`;
 
                     const detalhesTx = document.getElementById("detalhesTx");
                     detalhesTx.appendChild(linhaDetalhe);

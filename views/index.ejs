@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Block Explorer</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body onload="iniciaPagina()">
     <%- include("partials/header") %>
     <%- include("partials/searchBars") %>
 
+    <main>
+    <h1>Network Overview</h1>
     <div id="statistics" class="statistics">
         <p id="chainID"></p>
         <p id="blockNumber"></p>
@@ -19,7 +22,7 @@
         <p id="net_peerCount"></p>
     </div>
 
-    <hr>
+    <h2>Recent Blocks</h2>
     <div id="blocosRecentes" class="blocosRecentes">
         <div id="blocoMaisRecente">
             <p id="blocoMaisRecente-numero"></p>
@@ -38,6 +41,7 @@
         </div>
     </div>
     <div id="transacoesRecentes" class="transacoesRecentes"></div>
+    </main>
 
     <script src="/js/basic_functions.js"></script>
     <script>
