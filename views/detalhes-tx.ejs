@@ -5,11 +5,77 @@
         <title>Tx: #<%= txHash %></title>
     </head>
     <body onload="iniciaPagina()">
-        <h1>Tx: #<%= txHash %></h1>
+        <div id="topBar" class="topBar">
+            <nav>
+                <a href="/blocks">Blocks</a>
+                <a href="/txs">Transactions</a>
+                <a href="/logs">Logs</a>
+                <a href="/chamadas">Chamadas</a>
+                <a href="/LICENSE">License</a>
+            </nav>
+        </div>
+
+        <div id="searchBar" class="searchBar">
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
+            <button onclick="paginaBloco()">Ver Bloco</button>
+            <br>
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
+            <button onclick="paginaTx()">Ver Tx</button>
+            <br>
+        </div>
+
+        <h2>Tx: #<%= txHash %></h2>
+
+        <div id="detalhesTx", class="detalhesTx">
+            
+        </div>
 
         <script>
             async function iniciaPagina() {
-                console.log("Em construção!");
+                const response = await enviar("eth_getTransactionByHash", `["<%= txHash %>"]`);
+                const tx = response.result;
+
+                for (const [key, value] of Object.entries(tx)) {
+                    console.log(`${key}:`, value);
+
+                    const linhaDetalhe = document.createElement("div");
+
+                    linhaDetalhe.innerHTML = `<p>${key}: ${value}</p>`;
+
+                    const detalhesTx = document.getElementById("detalhesTx");
+                    detalhesTx.appendChild(linhaDetalhe);
+                }
+            }
+
+            async function enviar(metodo, params) {
+                console.log("Sending request to RPC node:", metodo, params);
+  
+                const response = await fetch("/api", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: `{"method": "${metodo}","params": ${params},"id": 1,"jsonrpc": "2.0"}`,
+                });
+                const data = await response.json();
+                
+                return data;
+            }
+
+            function paginaBloco() {
+                let bloco = document.getElementById("barraDePesquisaBloco").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/block/${bloco}`)
+            }
+
+            function paginaTx() {
+                let bloco = document.getElementById("barraDePesquisaTx").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/tx/${bloco}`)
             }
         </script>
     </body>
