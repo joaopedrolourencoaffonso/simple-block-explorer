@@ -406,6 +406,62 @@ body.transactions-page #txRecentes > div.newest-transaction::before {
     text-transform: uppercase;
 }
 
+body.calls-page main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.calls-intro {
+    margin: -4px 0 24px;
+    color: var(--blue-dark);
+    font-weight: 700;
+}
+
+.rpc-playground {
+    display: grid;
+    gap: 12px;
+    padding: 22px;
+    border: var(--border);
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.rpc-playground label {
+    color: var(--blue-dark);
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.rpc-playground select {
+    max-width: 100%;
+}
+
+.rpc-playground textarea {
+    min-height: 300px;
+    font-family: "Courier New", monospace;
+    line-height: 1.5;
+}
+
+.rpc-playground button {
+    justify-self: start;
+}
+
+.rpc-response {
+    margin-top: 36px;
+}
+
+.rpc-response h2 {
+    margin-bottom: 18px;
+}
+
+.rpc-response #substituirTextoAqui {
+    min-height: 80px;
+    font-size: 14px;
+    line-height: 1.55;
+    overflow-x: auto;
+}
+
 @media (max-width: 900px) {
     body {
         padding: 14px;

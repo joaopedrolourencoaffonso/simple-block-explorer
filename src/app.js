@@ -44,6 +44,10 @@ app.get('/txs', (req, res) => {
   res.render('transactions');
 })
 
+app.get('/LICENSE', (req, res) => {
+  res.render('LICENSE');
+})
+
 // Rota para um bloco específico (ex: /block/1234)
 app.get('/block/:blockNumber', (req, res) => {
     const blockNumber = req.params.blockNumber;

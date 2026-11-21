@@ -3,13 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>Teste de chamadas</title>
+        <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body>
+    <body class="calls-page">
         <%- include("partials/header") %>
         <%- include("partials/searchBars") %>
 
-        <h2>Testar chamadas</h2>
+        <main>
+        <h1>Testar chamadas</h1>
+        <p class="calls-intro">Escolha um método RPC, revise os parâmetros e envie uma chamada.</p>
 
+        <section class="rpc-playground" aria-label="Ferramenta de chamada RPC">
+        <label for="metodoSelecionado">Método RPC</label>
         <select name="metodos" id="metodoSelecionado">
             <option value="eth_blockNumber">eth_blockNumber</option>
             <option value="eth_chainId">eth_chainId</option>
@@ -42,8 +47,7 @@
             <option value="eth_getLogs">eth_getLogs</option>
         </select>
 
-        <br><br>
-
+        <label for="textInput">Requisição JSON</label>
         <textarea id="textInput" rows="10" cols="80">
 {
     "method": "eth_blockNumber",
@@ -51,10 +55,14 @@
     "id": 1,
     "jsonrpc": "2.0"
 }</textarea>
-        <br><br>
         <button onclick="enviar()">Enviar</button>
-        <hr>
-        <p id="substituirTextoAqui"></p>
+        </section>
+
+        <section class="rpc-response" aria-label="Resposta RPC">
+            <h2>Resposta</h2>
+            <pre id="substituirTextoAqui"></pre>
+        </section>
+        </main>
       
         <script>
             const RPC_NODE = "/api";
@@ -73,11 +81,8 @@
                 });
                 const data = await response.json();
                 console.log("Received response:", data);
-                let resposta = JSON.stringify(data, null, 2);
-                responsta = resposta.replace("{","{<br>&nbsp;").replace("}","<br>}").replaceAll(",", ",<br>&nbsp;");
-  
-                element = document.getElementById("substituirTextoAqui");
-                element.innerHTML = responsta;
+                const resposta = document.getElementById("substituirTextoAqui");
+                resposta.textContent = JSON.stringify(data, null, 2);
             }
 
             metodoEscolhido.addEventListener('change', (event) => {
