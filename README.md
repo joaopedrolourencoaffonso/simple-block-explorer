@@ -139,6 +139,6 @@ O comando abaixo irá transferir 10 wei do endereço `0x71562b71999873DB5b286dF9
 "0x07fac3f3d3bf74ed24e8be1b43b3dc15a97688241d0637a3c3c891fe5ad33302"
 ```
 
-# Abrindo issues
+# Dúvidas, problemas e sugestões
 
 A aplicação está em sua primeira versão. Em caso de problemas ou sugestões de melhorias, favor, abrir uma issue [aqui](https://github.com/joaopedrolourencoaffonso/guarana-eth-explorer/issues).
