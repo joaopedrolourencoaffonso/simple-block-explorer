@@ -1,166 +1,156 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Block Explorer</title>
-    </head>
-    <body onload="iniciaPagina()">
-        <%- include("partials/header") %>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Block Explorer</title>
+</head>
+<body onload="iniciaPagina()">
+    <%- include("partials/header") %>
+    <%- include("partials/searchBars") %>
 
-        <div id="searchBar" class="searchBar">
-            <br>
-            <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
-            <button onclick="paginaBloco()">Ver Bloco</button>
-            <br>
-            <br>
-            <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
-            <button onclick="paginaTx()">Ver Tx</button>
-            <br>
+    <div id="statistics" class="statistics">
+        <p id="chainID"></p>
+        <p id="blockNumber"></p>
+        <p id="gasPrice"></p>
+        <p id="syncing"></p>
+        <p id="baseFee"></p>
+        <p id="web3_clientVersion"></p>
+        <p id="net_version"></p>
+        <p id="net_peerCount"></p>
+    </div>
+
+    <hr>
+    <div id="blocosRecentes" class="blocosRecentes">
+        <div id="blocoMaisRecente">
+            <p id="blocoMaisRecente-numero"></p>
+            <p id="blocoMaisRecente-tx"></p>
+            <p id="blocoMaisRecente-miner"></p>
         </div>
-
-        <div id="statistics" class="statistics">
-            <p id="chainID"></p>
-            <p id="blockNumber"></p>
-            <p id="gasPrice"></p>
-            <p id="syncing"></p>
-            <p id="baseFee"></p>
-            <p id="web3_clientVersion"></p>
-            <p id="net_version"></p>
-            <p id="net_peerCount"></p>
+        <div id="blocoMenosUm">
+            <p id="blocoMenosUm-numero"></p>
+            <p id="blocoMenosUm-tx"></p>
+            <p id="blocoMenosUm-miner"></p>
         </div>
-
-        <hr>
-        <div id="blocosRecentes" class="blocosRecentes">
-            <div id="blocoMaisRecente">
-                <p id="blocoMaisRecente-numero"></p>
-                <p id="blocoMaisRecente-tx"></p>
-                <p id="blocoMaisRecente-miner"></p>
-            </div>
-            <div id="blocoMenosUm">
-                <p id="blocoMenosUm-numero"></p>
-                <p id="blocoMenosUm-tx"></p>
-                <p id="blocoMenosUm-miner"></p>
-            </div>
-            <div id="blocoMenosDois">
-                <p id="blocoMenosDois-numero"></p>
-                <p id="blocoMenosDois-tx"></p>
-                <p id="blocoMenosDois-miner"></p>
-            </div>
+        <div id="blocoMenosDois">
+            <p id="blocoMenosDois-numero"></p>
+            <p id="blocoMenosDois-tx"></p>
+            <p id="blocoMenosDois-miner"></p>
         </div>
-        <div id="transacoesRecentes" class="transacoesRecentes"></div>
+    </div>
+    <div id="transacoesRecentes" class="transacoesRecentes"></div>
 
-        <script src="/js/basic_functions.js"></script>
-        <script>
-            let numeroDeBlocos;
+    <script src="/js/basic_functions.js"></script>
+    <script>
+        let numeroDeBlocos;
 
-            async function iniciaPagina() {
-                let elemento;
-                let response;
+        async function iniciaPagina() {
+            let elemento;
+            let response;
 
-                // chainID
-                response = await enviar("eth_chainId", '[]');
-                elemento = document.getElementById("chainID");
-                const chainId = parseInt(response.result, 16);
-                elemento.innerHTML = `Chain id: ${chainId}`;
-                
-                // blockNumber
-                response = await enviar("eth_blockNumber", '[]');
-                elemento = document.getElementById("blockNumber");
-                numeroDeBlocos = parseInt(response.result, 16);
-                elemento.innerHTML = `Número de Blocos: ${numeroDeBlocos}`;
+            // chainID
+            response = await enviar("eth_chainId", '[]');
+            elemento = document.getElementById("chainID");
+            const chainId = parseInt(response.result, 16);
+            elemento.innerHTML = `Chain id: ${chainId}`;
+            
+            // blockNumber
+            response = await enviar("eth_blockNumber", '[]');
+            elemento = document.getElementById("blockNumber");
+            numeroDeBlocos = parseInt(response.result, 16);
+            elemento.innerHTML = `Número de Blocos: ${numeroDeBlocos}`;
 
-                // gasPrice
-                response = await enviar("eth_gasPrice", '[]');
-                elemento = document.getElementById("gasPrice");
-                const gasPrice = parseInt(response.result, 16);
-                elemento.innerHTML = `gasPrice: ${gasPrice}`;
+            // gasPrice
+            response = await enviar("eth_gasPrice", '[]');
+            elemento = document.getElementById("gasPrice");
+            const gasPrice = parseInt(response.result, 16);
+            elemento.innerHTML = `gasPrice: ${gasPrice}`;
 
-                // syncing
-                response = await enviar("eth_syncing", '[]');
-                elemento = document.getElementById("syncing");
-                const syncing = response.result;
-                elemento.innerHTML = `syncing: ${syncing}`;
+            // syncing
+            response = await enviar("eth_syncing", '[]');
+            elemento = document.getElementById("syncing");
+            const syncing = response.result;
+            elemento.innerHTML = `syncing: ${syncing}`;
 
-                // baseFee
-                response = await enviar("eth_baseFee", '[]');
-                elemento = document.getElementById("baseFee");
-                const baseFee = parseInt(response.result, 16);
-                elemento.innerHTML = `baseFee: ${baseFee}`;
+            // baseFee
+            response = await enviar("eth_baseFee", '[]');
+            elemento = document.getElementById("baseFee");
+            const baseFee = parseInt(response.result, 16);
+            elemento.innerHTML = `baseFee: ${baseFee}`;
 
-                // web3_clientVersion
-                response = await enviar("web3_clientVersion", '[]');
-                elemento = document.getElementById("web3_clientVersion");
-                const web3_clientVersion = response.result;
-                elemento.innerHTML = `client Version: ${web3_clientVersion}`;
+            // web3_clientVersion
+            response = await enviar("web3_clientVersion", '[]');
+            elemento = document.getElementById("web3_clientVersion");
+            const web3_clientVersion = response.result;
+            elemento.innerHTML = `client Version: ${web3_clientVersion}`;
 
-                // net_version
-                response = await enviar("net_version", '[]');
-                elemento = document.getElementById("net_version");
-                const net_version = response.result;
-                elemento.innerHTML = `client Version: ${net_version}`;
+            // net_version
+            response = await enviar("net_version", '[]');
+            elemento = document.getElementById("net_version");
+            const net_version = response.result;
+            elemento.innerHTML = `client Version: ${net_version}`;
 
-                // web3_clientVersion
-                response = await enviar("net_peerCount", '[]');
-                elemento = document.getElementById("net_peerCount");
-                const net_peerCount = parseInt(response.result, 16);
-                elemento.innerHTML = `Número de Peers: ${net_peerCount}`;
+            // web3_clientVersion
+            response = await enviar("net_peerCount", '[]');
+            elemento = document.getElementById("net_peerCount");
+            const net_peerCount = parseInt(response.result, 16);
+            elemento.innerHTML = `Número de Peers: ${net_peerCount}`;
 
-                atualizacoes();
-            }
+            atualizacoes();
+        }
 
-            function atualizacoes() {
-                setInterval(async () => {
-                    try {
-                        const resultadoHex = await enviar("eth_blockNumber", '[]');
-                        if (resultadoHex.error) {
-                            throw new Error(resultadoHex.error.message);
-                        }
-                        const novoNumeroDeBlocos = parseInt(resultadoHex.result, 16);
-                        if (Number.isNaN(novoNumeroDeBlocos)) {
-                            throw new Error("Invalid block number returned by RPC");
-                        }
-                        console.log("-> ", novoNumeroDeBlocos);
-
-                        if (novoNumeroDeBlocos !== numeroDeBlocos) {
-                            numeroDeBlocos = novoNumeroDeBlocos;
-                            const blocoMaisRecente = `0x${numeroDeBlocos.toString(16)}`;
-                            const blocoMenosUm = `0x${(numeroDeBlocos - 1).toString(16)}`;
-                            const blocoMenosDois = `0x${(numeroDeBlocos - 2).toString(16)}`;
-
-                            console.log(blocoMaisRecente);
-                            await populaBlock("blocoMaisRecente", blocoMaisRecente, numeroDeBlocos);
-                            await populaBlock("blocoMenosUm", blocoMenosUm, numeroDeBlocos - 1);
-                            await populaBlock("blocoMenosDois", blocoMenosDois, numeroDeBlocos - 2);
-                        }
-                    } catch (erro) {
-                        console.error("Erro:", erro);
+        function atualizacoes() {
+            setInterval(async () => {
+                try {
+                    const resultadoHex = await enviar("eth_blockNumber", '[]');
+                    if (resultadoHex.error) {
+                        throw new Error(resultadoHex.error.message);
                     }
-                }, 5000);
-            }
+                    const novoNumeroDeBlocos = parseInt(resultadoHex.result, 16);
+                    if (Number.isNaN(novoNumeroDeBlocos)) {
+                        throw new Error("Invalid block number returned by RPC");
+                    }
+                    console.log("-> ", novoNumeroDeBlocos);
 
-            async function populaBlock(blocoParaPopular, blockNumber, numeroDoBloco) {
-                const resultado = await enviar("eth_getBlockByNumber", `["${blockNumber}",false]`);
-                if (resultado.error) {
-                    throw new Error(resultado.error.message);
+                    if (novoNumeroDeBlocos !== numeroDeBlocos) {
+                        numeroDeBlocos = novoNumeroDeBlocos;
+                        const blocoMaisRecente = `0x${numeroDeBlocos.toString(16)}`;
+                        const blocoMenosUm = `0x${(numeroDeBlocos - 1).toString(16)}`;
+                        const blocoMenosDois = `0x${(numeroDeBlocos - 2).toString(16)}`;
+
+                        console.log(blocoMaisRecente);
+                        await populaBlock("blocoMaisRecente", blocoMaisRecente, numeroDeBlocos);
+                        await populaBlock("blocoMenosUm", blocoMenosUm, numeroDeBlocos - 1);
+                        await populaBlock("blocoMenosDois", blocoMenosDois, numeroDeBlocos - 2);
+                    }
+                } catch (erro) {
+                    console.error("Erro:", erro);
                 }
-                const bloco = resultado.result;
-                if (!bloco) {
-                    throw new Error(`No block returned for ${blockNumber}`);
-                }
-                console.log(" hash: ", bloco.hash);
-                console.log(" n tx: ", bloco.transactions.length);
-                console.log("miner: ", bloco.miner);
+            }, 5000);
+        }
 
-                numeroElement = document.getElementById(`${blocoParaPopular}-numero`);
-                numeroElement.innerHTML = `${numeroDoBloco}`;
-
-                txElement = document.getElementById(`${blocoParaPopular}-tx`);
-                txElement.innerHTML = `   tx: ${bloco.transactions.length}`;
-
-                txElement = document.getElementById(`${blocoParaPopular}-miner`);
-                txElement.innerHTML = `Miner: ${bloco.miner}`;
+        async function populaBlock(blocoParaPopular, blockNumber, numeroDoBloco) {
+            const resultado = await enviar("eth_getBlockByNumber", `["${blockNumber}",false]`);
+            if (resultado.error) {
+                throw new Error(resultado.error.message);
             }
+            const bloco = resultado.result;
+            if (!bloco) {
+                throw new Error(`No block returned for ${blockNumber}`);
+            }
+            console.log(" hash: ", bloco.hash);
+            console.log(" n tx: ", bloco.transactions.length);
+            console.log("miner: ", bloco.miner);
 
-        </script>
-    </body>
-  </html>
+            numeroElement = document.getElementById(`${blocoParaPopular}-numero`);
+            numeroElement.innerHTML = `${numeroDoBloco}`;
+
+            txElement = document.getElementById(`${blocoParaPopular}-tx`);
+            txElement.innerHTML = `   tx: ${bloco.transactions.length}`;
+
+            txElement = document.getElementById(`${blocoParaPopular}-miner`);
+            txElement.innerHTML = `Miner: ${bloco.miner}`;
+        }
+
+    </script>
+</body>
+</html>

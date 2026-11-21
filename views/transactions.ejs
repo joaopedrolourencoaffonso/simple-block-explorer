@@ -1,68 +1,58 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Transações</title>
-    </head>
-    <body onload="iniciaPagina()">
-        <%- include("partials/header") %>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transações</title>
+</head>
+<body onload="iniciaPagina()">
+    <%- include("partials/header") %>
+    <%- include("partials/searchBars") %>
 
-        <div id="searchBar" class="searchBar">
-            <br>
-            <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
-            <button onclick="paginaBloco()">Ver Bloco</button>
-            <br>
-            <br>
-            <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
-            <button onclick="paginaTx()">Ver Tx</button>
-            <br>
-        </div>
-
-        <h2>Transações Recentes</h2>
+    <h2>Transações Recentes</h2>
+    
+    <div id="txRecentes" class="txRecentes">
         
-        <div id="txRecentes" class="txRecentes">
-            
-        </div>
+    </div>
 
-        <script src="/js/basic_functions.js"></script>
-        <script>
-            async function iniciaPagina() {
-                response = await enviar("eth_blockNumber", '[]');
-                let blockNumber = response.result;
-                blockNumber = blockNumber - 0;
-                let temp = blockNumber;
-                let resultado;
+    <script src="/js/basic_functions.js"></script>
+    <script>
+        async function iniciaPagina() {
+            response = await enviar("eth_blockNumber", '[]');
+            let blockNumber = response.result;
+            blockNumber = blockNumber - 0;
+            let temp = blockNumber;
+            let resultado;
 
-                while (blockNumber - 5 <= temp) {
-                    //console.log(temp);
-                    //
-                    resultado = await enviar("eth_getBlockByNumber", `["0x${temp.toString(16)}",false]`);
-                    tx = resultado.result.transactions;
-                    console.log(tx.length);
+            while (blockNumber - 5 <= temp) {
+                //console.log(temp);
+                //
+                resultado = await enviar("eth_getBlockByNumber", `["0x${temp.toString(16)}",false]`);
+                tx = resultado.result.transactions;
+                console.log(tx.length);
 
-                    if (tx.length > 0) {
-                        for (id in tx) {
-                            console.log("-> ",tx[id]);
+                if (tx.length > 0) {
+                    for (id in tx) {
+                        console.log("-> ",tx[id]);
 
-                            const blocoTx = document.createElement("div");
+                        const blocoTx = document.createElement("div");
 
-                            detalhesTx = await enviar("eth_getTransactionByHash", `["${tx[id]}"]`);
-                            console.log("detalhesTx", detalhesTx);
+                        detalhesTx = await enviar("eth_getTransactionByHash", `["${tx[id]}"]`);
+                        console.log("detalhesTx", detalhesTx);
 
-                            blocoTx.innerHTML = `
-                            <h3>hash: <a href="/tx/${tx[id]}">${tx[id]}</a></h3>
-                            <p>block: <a href="/block/${parseInt(detalhesTx.result.blockNumber, 16)}">${parseInt(detalhesTx.result.blockNumber, 16)}</a></p>
-                            <p>from: ${detalhesTx.result.from} </p>
-                            <p>to: ${detalhesTx.result.to}</p>`;
+                        blocoTx.innerHTML = `
+                        <h3>hash: <a href="/tx/${tx[id]}">${tx[id]}</a></h3>
+                        <p>block: <a href="/block/${parseInt(detalhesTx.result.blockNumber, 16)}">${parseInt(detalhesTx.result.blockNumber, 16)}</a></p>
+                        <p>from: ${detalhesTx.result.from} </p>
+                        <p>to: ${detalhesTx.result.to}</p>`;
 
-                            const txRecentes = document.getElementById("txRecentes");
-                            txRecentes.appendChild(blocoTx);
-                        }
+                        const txRecentes = document.getElementById("txRecentes");
+                        txRecentes.appendChild(blocoTx);
                     }
-                    //
-                    temp--;
                 }
+                //
+                temp--;
             }
-        </script>
-    </body>
-  </html>
+        }
+    </script>
+</body>
+</html>
