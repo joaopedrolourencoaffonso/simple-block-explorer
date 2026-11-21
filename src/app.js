@@ -33,15 +33,15 @@ app.post("/api", async (req, res) => {
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  res.render('index');
 })
 
 app.get('/blocks', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'blocks.html'));
+  res.render('blocks');
 })
 
 app.get('/txs', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'transactions.html'));
+  res.render('transactions');
 })
 
 // Rota para um bloco específico (ex: /block/1234)
@@ -59,7 +59,7 @@ app.get('/tx/:txHash', (req, res) => {
 });
 
 app.get('/chamadas', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'chamadas.html'));
+  res.render('chamadas');
 })
 
 module.exports = app;
