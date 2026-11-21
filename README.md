@@ -37,13 +37,19 @@ $ npm start
 
 5. Acesse o aplicativo em [localhost:3000](localhost:3000).
 
-Abaixo, fotos das páginas:
+Abaixo, foto da **página principal**:
 
 ![](./img/pagina-principal.png)
 
+**Blocos**:
+
 ![](./img/blocos.png)
 
+**Transacoes**:
+
 ![](./img/transacoes.png)
+
+**Chamadas**:
 
 ![](./img/chamadas.png)
 
