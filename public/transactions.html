@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Transações</title>
+    </head>
+    <body onload="iniciaPagina()">
+        <div id="topBar" class="topBar">
+            <nav>
+                <a href="/blocks">Blocks</a>
+                <a href="/txs">Transactions</a>
+                <a href="/logs">Logs</a>
+                <a href="/chamadas">Chamadas</a>
+                <a href="/LICENSE">License</a>
+            </nav>
+        </div>
+
+        <div id="searchBar" class="searchBar">
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaBloco">
+            <button onclick="paginaBloco()">Ver Bloco</button>
+            <br>
+            <br>
+            <input type="text" placeholder="Procurar.." id="barraDePesquisaTx">
+            <button onclick="paginaTx()">Ver Tx</button>
+            <br>
+        </div>
+
+        <h2>Transações Recentes</h2>
+        
+        <div id="txRecentes" class="txRecentes">
+            
+        </div>
+
+        <script>
+
+            async function iniciaPagina() {
+                response = await enviar("eth_blockNumber", '[]');
+                let blockNumber = response.result;
+                blockNumber = blockNumber - 0;
+                let temp = blockNumber;
+                let resultado;
+
+                while (blockNumber - 5 <= temp) {
+                    //console.log(temp);
+                    //
+                    resultado = await enviar("eth_getBlockByNumber", `["0x${temp.toString(16)}",false]`);
+                    tx = resultado.result.transactions;
+                    console.log(tx.length);
+
+                    if (tx.length > 0) {
+                        for (id in tx) {
+                            console.log("-> ",tx[id]);
+
+                            const blocoTx = document.createElement("div");
+
+                            detalhesTx = await enviar("eth_getTransactionByHash", `["${tx[id]}"]`);
+                            console.log("detalhesTx", detalhesTx);
+
+                            blocoTx.innerHTML = `
+                            <h3>hash: <a href="/tx/${tx[id]}">${tx[id]}</a></h3>
+                            <p>block: <a href="/block/${parseInt(detalhesTx.result.blockNumber, 16)}">${parseInt(detalhesTx.result.blockNumber, 16)}</a></p>
+                            <p>from: ${detalhesTx.result.from} </p>
+                            <p>to: ${detalhesTx.result.to}</p>`;
+
+                            const txRecentes = document.getElementById("txRecentes");
+                            txRecentes.appendChild(blocoTx);
+                        }
+                    }
+                    //
+                    temp--;
+                }
+            }
+            
+            async function enviar(metodo, params) {
+                console.log("Sending request to RPC node:", metodo, params);
+  
+                const response = await fetch("/api", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: `{"method": "${metodo}","params": ${params},"id": 1,"jsonrpc": "2.0"}`,
+                });
+                const data = await response.json();
+                
+                return data;
+            }
+
+            function paginaBloco() {
+                let bloco = document.getElementById("barraDePesquisaBloco").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/block/${bloco}`)
+            }
+
+            function paginaTx() {
+                let bloco = document.getElementById("barraDePesquisaTx").value;
+                console.log(bloco);
+
+                window.open(`http://127.0.0.1:3000/tx/${bloco}`)
+            }
+
+        </script>
+    </body>
+  </html>
